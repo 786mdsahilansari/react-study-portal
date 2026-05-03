@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS Framework - Complete Study Portal | BCSE-721</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004499;
+            --secondary: #00cccc;
+            --accent: #ff9500;
+            --text-dark: #1a1a2e;
+            --text-light: #f4f4f9;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border: #e0e0e0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 102, 204, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '⚛️';
+            font-size: 2rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--text-dark) 100%);
+            color: var(--text-light);
+            padding: 4rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tabs Navigation */
+        .unit-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--border);
+            background: var(--bg-white);
+            color: var(--text-dark);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Content Sections */
+        .unit-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .unit-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .card p, .card li {
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .card ul, .card ol {
+            margin-left: 1.5rem;
+        }
+
+        /* Question Paper Styles */
+        .question-paper {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .paper-header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .paper-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8f4f8 100%);
+            border-radius: 8px;
+        }
+
+        .meta-box {
+            text-align: center;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .meta-value {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .question {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            background: #f0f8ff;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+        }
+
+        .question-num {
+            font-weight: 700;
+            color: var(--primary);
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .question-text {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .marks {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .answer-container {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .answer-toggle {
+            background: linear-gradient(135deg, var(--success) 0%, #388e3c 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .answer-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .answer-toggle.active {
+            background: linear-gradient(135deg, #ff9500 0%, #f57c00 100%);
+        }
+
+        .answer-content {
+            display: none;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--success);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .answer-content.show {
+            display: block;
+        }
+
+        .answer-content h4 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .answer-content p {
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .key-points h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .key-points li {
+            color: #4d2600;
+            margin-bottom: 0.6rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            nav a {
+                display: block;
+                text-align: center;
+                padding: 0.8rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .course-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .unit-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .paper-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">ReactJS Framework</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#units">Units</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero" id="home">
+            <h1>ReactJS Framework - Complete Study Portal</h1>
+            <p>BCSE-721 | B.Tech 6th Semester | CSE - Full Stack Development</p>
+            <p>M.M. Deemed to be University, Mullana (Ambala) | Batch 2022-2026</p>
+            <div class="course-meta">
+                <div class="meta-item">
+                    <strong>📚 4 Units</strong> with Complete Notes
+                </div>
+                <div class="meta-item">
+                    <strong>📝 Sample Papers</strong> for Each Unit
+                </div>
+                <div class="meta-item">
+                    <strong>✅ Detailed Answers</strong> Included
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Complete Units</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">28 Hrs</div>
+                <div class="stat-label">Course Duration</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4 Papers</div>
+                <div class="stat-label">Sample Questions</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Syllabus Covered</div>
+            </div>
+        </div>
+
+        <!-- Unit Navigation -->
+        <div class="unit-tabs" id="units">
+            <button class="tab-btn active" onclick="showUnit(1)">Unit 1: Components & JSX</button>
+            <button class="tab-btn" onclick="showUnit(2)">Unit 2: Events & State</button>
+            <button class="tab-btn" onclick="showUnit(3)">Unit 3: React Router</button>
+            <button class="tab-btn" onclick="showUnit(4)">Unit 4: Redux</button>
+        </div>
+
+        <!-- UNIT 1 -->
+        <div id="unit-1" class="unit-content active">
+            <div class="card">
+                <h2>📘 Unit 1: Components & JSX (7 Hours)</h2>
+                <p>Learn the fundamentals of React components, JSX syntax, props, conditional rendering, and component composition.</p>
+                
+                <h3>Key Topics Covered:</h3>
+                <ul>
+                    <li><strong>Components:</strong> UI building blocks, Functional & Class components</li>
+                    <li><strong>JSX:</strong> JavaScript XML, Converting HTML to JSX</li>
+                    <li><strong>Props:</strong> Passing data to components</li>
+                    <li><strong>Conditional Rendering:</strong> if/else, ternary, &&, switch</li>
+                    <li><strong>Lists:</strong> Rendering arrays, key prop, filtering</li>
+                    <li><strong>Pure Components:</strong> Best practices</li>
+                    <li><strong>Component Tree:</strong> UI hierarchy</li>
+                </ul>
+
+                <div class="key-points">
+                    <h4>⭐ Important Concepts</h4>
+                    <ul>
+                        <li>Components must start with capital letter</li>
+                        <li>JSX requires single root element</li>
+                        <li>Use className instead of class</li>
+                        <li>Always provide key prop for lists</li>
+                        <li>Props flow only downward (parent to child)</li>
+                        <li>Keep components pure (no side effects)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Unit 1 Question Paper -->
+            <div class="question-paper">
+                <div class="paper-header">
+                    <h2>Sample Question Paper - Unit 1</h2>
+                    <p>Components & JSX | Time: 1 Hour</p>
+                </div>
+
+                <div class="paper-meta">
+                    <div class="meta-box">
+                        <span class="meta-label">Total Marks</span>
+                        <span class="meta-value">100</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">1 Mark Questions</span>
+                        <span class="meta-value">12 (3 × 4)</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">2 Mark Questions</span>
+                        <span class="meta-value">4 (1 × 4)</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">4 Mark Questions</span>
+                        <span class="meta-value">4 (1 × 4)</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">6 Mark Questions</span>
+                        <span class="meta-value">4 (1 × 4)</span>
+                    </div>
+                </div>
+
+                <!-- Section A: 1 Mark Questions -->
+                <div class="section-title">📍 Section A: 1 Mark Questions (Compulsory)</div>
+                <p style="color: #666; margin: 1rem 0; font-style: italic;">Answer all 12 questions. Each question carries 1 mark. Answers should not be single words or fill-in-the-blanks.</p>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Explain the difference between functional and class components in React.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Functional Components:</strong> JavaScript functions that return JSX. They are simpler, support Hooks, and are preferred in modern React.</p>
+                            <p><strong>Class Components:</strong> ES6 classes extending React.Component. They have lifecycle methods and use this.state for state management. Older approach.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">What is JSX and why is it used in React applications?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>JSX (JavaScript XML) is a syntax extension that allows writing HTML-like code in JavaScript. It makes code more readable and maintainable by mixing markup with logic. JSX is compiled to React.createElement() calls by Babel.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">What is the significance of the key prop when rendering lists in React?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>The key prop helps React identify which items have changed, been added, or removed. Using unique identifiers as keys improves performance and prevents bugs when lists are reordered or filtered. Never use array index as key.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">How does conditional rendering work in React? Provide one example.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Conditional rendering shows or hides elements based on conditions using ternary operators, && operator, or if/else statements.</p>
+                            <p><strong>Example:</strong> {isLoggedIn ? &lt;Dashboard /&gt; : &lt;LoginForm /&gt;}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">5</span>
+                        <span class="question-text">Explain what props are in React and how they differ from state.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Props:</strong> Read-only parameters passed from parent to child components. Cannot be modified by child.</p>
+                            <p><strong>State:</strong> Local mutable data managed within a component. Can be changed and causes re-render when updated.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">6</span>
+                        <span class="question-text">What are the rules for converting HTML to valid JSX?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Key JSX Rules:</strong></p>
+                            <ul>
+                                <li>Use className instead of class</li>
+                                <li>Use camelCase for event handlers (onClick)</li>
+                                <li>Close all tags, including self-closing tags with /&gt;</li>
+                                <li>Return single root element (or use Fragment)</li>
+                                <li>Use curly braces {} for JavaScript expressions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">7</span>
+                        <span class="question-text">What is component nesting and why is it important in React?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Component nesting means placing components inside other components. It allows building complex UIs from smaller, reusable pieces and creates a hierarchical structure. Improves code organization and maintainability.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">8</span>
+                        <span class="question-text">Explain the concept of a pure component and why it matters.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>A pure component returns the same output for the same input without side effects. It doesn't modify props or external state during render. Pure components are easier to test, understand, and optimize.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">9</span>
+                        <span class="question-text">How do you pass data through multiple levels of components in React?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>You can pass data through props drilling (passing props through each level) or use Context API to provide data to deeply nested components without passing through every level.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">10</span>
+                        <span class="question-text">What is the difference between default export and named export in React?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Default Export:</strong> Only one per file, imported as: import Component from './Component'</p>
+                            <p><strong>Named Export:</strong> Multiple per file, imported as: import { Component } from './Component'</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">11</span>
+                        <span class="question-text">Explain how curly braces are used in JSX for embedding JavaScript expressions.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Curly braces {} in JSX allow embedding JavaScript expressions like variables, function calls, ternary operators, and array methods. {expression} is evaluated and its result is rendered. Double braces {{}} are used for inline objects/styles.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">12</span>
+                        <span class="question-text">What is the component tree and how does it relate to prop drilling?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Component tree is the hierarchical structure of components. Prop drilling occurs when data flows through many intermediate components that don't use it, just to reach a deeply nested component. Context API helps avoid this.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: 2 Mark Questions -->
+                <div class="section-title">📍 Section B: 2 Mark Questions</div>
+                <p style="color: #666; margin: 1rem 0; font-style: italic;">Answer all 4 questions. Each question carries 2 marks.</p>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Write a functional component that accepts a name prop and displays a greeting message with proper JSX formatting.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function Greeting({ name }) {
+  return (
+    &lt;div className="greeting"&gt;
+      &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
+      &lt;p&gt;Welcome to React&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Greeting;</div>
+                            <p><strong>Key Points:</strong> Uses destructuring for props, proper className usage, single root element (div), JSX expressions with curly braces.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Demonstrate conditional rendering with a component that shows different content based on a boolean prop.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function UserStatus({ isLoggedIn, userName }) {
+  return (
+    &lt;div&gt;
+      {isLoggedIn ? (
+        &lt;&gt;
+          &lt;h2&gt;Welcome, {userName}!&lt;/h2&gt;
+          &lt;button&gt;Logout&lt;/button&gt;
+        &lt;/&gt;
+      ) : (
+        &lt;&gt;
+          &lt;h2&gt;Please Login&lt;/h2&gt;
+          &lt;button&gt;Login&lt;/button&gt;
+        &lt;/&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</div>
+                            <p><strong>Key Points:</strong> Ternary operator for conditional rendering, Fragment (<>) for wrapping multiple elements without extra div.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Write a component that renders a list of items and explain the importance of the key prop.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function TodoList({ todos }) {
+  return (
+    &lt;ul&gt;
+      {todos.map(todo =&gt; (
+        &lt;li key={todo.id}&gt;
+          {todo.text}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</div>
+                            <p><strong>Key Importance:</strong> The key prop helps React identify which items changed. Using unique IDs (not indices) ensures correct component state preservation when lists reorder.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Explain component composition by creating a parent component that uses multiple child components.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function Card({ title, content }) {
+  return &lt;div&gt;&lt;h3&gt;{title}&lt;/h3&gt;&lt;p&gt;{content}&lt;/p&gt;&lt;/div&gt;;
+}
+
+function Dashboard() {
+  return (
+    &lt;div&gt;
+      &lt;Card title="About" content="Learn React" /&gt;
+      &lt;Card title="Features" content="Easy to use" /&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                            <p><strong>Composition Benefits:</strong> Reusable components, cleaner code, easier testing, better organization.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: 4 Mark Questions -->
+                <div class="section-title">📍 Section C: 4 Mark Questions</div>
+                <p style="color: #666; margin: 1rem 0; font-style: italic;">Answer all 4 questions. Each question carries 4 marks. Internal choice may be provided.</p>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Explain the complete flow of data in React components using props. Create an example with a parent component passing data to multiple child components.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Data Flow in React:</strong> React follows unidirectional data flow where data flows only from parent to child via props. Props are read-only; child cannot modify parent data.</p>
+                            <div class="code-block">// Parent Component
+function App() {
+  const user = { name: "Alice", role: "Admin" };
+  
+  return (
+    &lt;&gt;
+      &lt;Header user={user} /&gt;
+      &lt;Profile user={user} /&gt;
+    &lt;/&gt;
+  );
+}
+
+// Child Components
+function Header({ user }) {
+  return &lt;header&gt;Welcome, {user.name}&lt;/header&gt;;
+}
+
+function Profile({ user }) {
+  return &lt;div&gt;Role: {user.role}&lt;/div&gt;;
+}</div>
+                            <p><strong>Explanation:</strong> Parent maintains data and passes to children via props. Children cannot modify props (immutable). Child needs different data, must ask parent to change it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Discuss the differences between functional and class components. Write code examples for both showing how to render the same output.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Key Differences:</strong></p>
+                            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                <tr style="background: #f0f0f0;">
+                                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Aspect</th>
+                                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Functional</th>
+                                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Class</th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Syntax</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Function</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">ES6 Class</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Hooks</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Supported</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Not supported</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">State</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">useState Hook</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">this.state</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Lifecycle</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">useEffect Hook</td>
+                                    <td style="border: 1px solid #ddd; padding: 0.5rem;">Lifecycle methods</td>
+                                </tr>
+                            </table>
+                            <div class="code-block">// Functional Component
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Class Component (same output)
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+  
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;p&gt;Count: {this.state.count}&lt;/p&gt;
+        &lt;button onClick={() =&gt; 
+          this.setState({ count: this.state.count + 1 })
+        }&gt;
+          Increment
+        &lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Create a component that demonstrates all types of conditional rendering (if/else, ternary, &&, switch). Provide explanations for each approach.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">// 1. If-Else (outside JSX)
+function LoginStatus1({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return &lt;h1&gt;Welcome back!&lt;/h1&gt;;
+  }
+  return &lt;h1&gt;Please login&lt;/h1&gt;;
+}
+
+// 2. Ternary Operator (most common)
+function LoginStatus2({ isLoggedIn, name }) {
+  return (
+    &lt;h1&gt;
+      {isLoggedIn ? `Welcome, ${name}!` : "Please login"}
+    &lt;/h1&gt;
+  );
+}
+
+// 3. Logical AND (&&)
+function Notification({ unreadCount }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Inbox&lt;/h1&gt;
+      {unreadCount &gt; 0 &amp;&amp; (
+        &lt;p&gt;You have {unreadCount} new messages&lt;/p&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+
+// 4. Switch Statement
+function UserRole({ role }) {
+  switch(role) {
+    case 'admin':
+      return &lt;h1&gt;Admin Dashboard&lt;/h1&gt;;
+    case 'user':
+      return &lt;h1&gt;User Profile&lt;/h1&gt;;
+    default:
+      return &lt;h1&gt;Guest&lt;/h1&gt;;
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Explain JSX rules with examples. Demonstrate common mistakes and their corrections.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>JSX Rules with Examples:</strong></p>
+                            <div class="code-block">// ❌ WRONG: Multiple root elements
+function Bad1() {
+  return (
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Paragraph&lt;/p&gt;
+  );
+}
+
+// ✅ CORRECT: Single root
+function Good1() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Title&lt;/h1&gt;
+      &lt;p&gt;Paragraph&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+// ❌ WRONG: Using "class"
+function Bad2() {
+  return &lt;div class="container"&gt;Content&lt;/div&gt;;
+}
+
+// ✅ CORRECT: Using "className"
+function Good2() {
+  return &lt;div className="container"&gt;Content&lt;/div&gt;;
+}
+
+// ❌ WRONG: Not closing tags
+function Bad3() {
+  return &lt;input type="text"&gt;;
+}
+
+// ✅ CORRECT: Self-closing tags
+function Good3() {
+  return &lt;input type="text" /&gt;;
+}
+
+// ❌ WRONG: Using HTML event names
+function Bad4() {
+  return &lt;button onclick="handleClick()"&gt;Click&lt;/button&gt;;
+}
+
+// ✅ CORRECT: Using camelCase
+function Good4() {
+  return &lt;button onClick={handleClick}&gt;Click&lt;/button&gt;;
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: 6 Mark Questions -->
+                <div class="section-title">📍 Section D: 6 Mark Questions</div>
+                <p style="color: #666; margin: 1rem 0; font-style: italic;">Answer all 4 questions. Each question carries 6 marks. Internal choice may be provided.</p>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Design a complete product catalog component that demonstrates component composition, props, conditional rendering, and list rendering. Include all necessary features.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">// Product Card Component
+function ProductCard({ product, onAddToCart }) {
+  return (
+    &lt;div className="product-card"&gt;
+      &lt;img src={product.image} alt={product.name} /&gt;
+      &lt;h3&gt;{product.name}&lt;/h3&gt;
+      &lt;p className="price"&gt;${product.price}&lt;/p&gt;
+      {product.inStock ? (
+        &lt;&gt;
+          &lt;p className="stock"&gt;In Stock&lt;/p&gt;
+          &lt;button onClick={() =&gt; onAddToCart(product)}&gt;
+            Add to Cart
+          &lt;/button&gt;
+        &lt;/&gt;
+      ) : (
+        &lt;p className="out-of-stock"&gt;Out of Stock&lt;/p&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+
+// Catalog Component
+function ProductCatalog({ products, onAddToCart }) {
+  return (
+    &lt;div className="catalog"&gt;
+      &lt;h2&gt;Our Products&lt;/h2&gt;
+      {products.length &gt; 0 ? (
+        &lt;div className="product-grid"&gt;
+          {products.map(product =&gt; (
+            &lt;ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={onAddToCart}
+            /&gt;
+          ))}
+        &lt;/div&gt;
+      ) : (
+        &lt;p&gt;No products available&lt;/p&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+
+// App Component
+function App() {
+  const products = [
+    { id: 1, name: "Laptop", price: 999, inStock: true, image: "..." },
+    { id: 2, name: "Phone", price: 599, inStock: false, image: "..." },
+    { id: 3, name: "Tablet", price: 399, inStock: true, image: "..." }
+  ];
+  
+  const handleAddToCart = (product) =&gt; {
+    console.log("Added to cart:", product.name);
+  };
+  
+  return &lt;ProductCatalog products={products} onAddToCart={handleAddToCart} /&gt;;
+}</div>
+                            <p><strong>Key Features Demonstrated:</strong></p>
+                            <ul>
+                                <li>Component composition (ProductCard inside ProductCatalog)</li>
+                                <li>Props passing and destructuring</li>
+                                <li>Conditional rendering for stock status</li>
+                                <li>List rendering with map() and key prop</li>
+                                <li>Event handling with callbacks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Create a user authentication system component that shows different UI based on login status. Include all conditional rendering techniques.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function AuthSystem({ initialLoggedIn = false }) {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(initialLoggedIn);
+  const [userName, setUserName] = React.useState("Guest");
+  
+  // Using if/else logic
+  if (!isLoggedIn) {
+    return (
+      &lt;LoginForm 
+        onLogin={(name) =&gt; {
+          setUserName(name);
+          setIsLoggedIn(true);
+        }}
+      /&gt;
+    );
+  }
+  
+  // Using ternary for header
+  return (
+    &lt;div className="auth-container"&gt;
+      {isLoggedIn && (
+        &lt;header&gt;
+          &lt;h1&gt;Welcome, {userName}!&lt;/h1&gt;
+        &lt;/header&gt;
+      )}
+      
+      &lt;UserDashboard userName={userName} /&gt;
+      
+      &lt;button onClick={() =&gt; setIsLoggedIn(false)}&gt;
+        Logout
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+function LoginForm({ onLogin }) {
+  const [email, setEmail] = React.useState("");
+  
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    onLogin(email.split("@")[0]);
+  };
+  
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        type="email"
+        value={email}
+        onChange={(e) =&gt; setEmail(e.target.value)}
+        placeholder="Enter email"
+        required
+      /&gt;
+      &lt;button type="submit"&gt;Login&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+function UserDashboard({ userName }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;User Dashboard&lt;/h2&gt;
+      &lt;p&gt;Hello {userName}, welcome to your dashboard&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Write a comprehensive explanation of the component tree structure with a complete example. Show how data flows through multiple levels.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Component Tree Structure:</strong> A hierarchical representation of components showing parent-child relationships and data flow.</p>
+                            <div class="code-block">// Complete Component Tree Example
+function App() {
+  const appData = {
+    company: "Tech Corp",
+    theme: "dark"
+  };
+  
+  return (
+    &lt;div&gt;
+      &lt;Header appData={appData} /&gt;
+      &lt;MainContent appData={appData} /&gt;
+      &lt;Footer appData={appData} /&gt;
+    &lt;/div&gt;
+  );
+}
+
+function Header({ appData }) {
+  return (
+    &lt;header&gt;
+      &lt;Logo company={appData.company} /&gt;
+      &lt;Navigation theme={appData.theme} /&gt;
+    &lt;/header&gt;
+  );
+}
+
+function Logo({ company }) {
+  return &lt;h1&gt;{company}&lt;/h1&gt;;
+}
+
+function Navigation({ theme }) {
+  return &lt;nav className={theme}&gt;Menu&lt;/nav&gt;;
+}
+
+function MainContent({ appData }) {
+  return (
+    &lt;main&gt;
+      &lt;Article company={appData.company} /&gt;
+    &lt;/main&gt;
+  );
+}
+
+function Article({ company }) {
+  return &lt;article&gt;About {company}&lt;/article&gt;;
+}
+
+function Footer({ appData }) {
+  return &lt;footer&gt;© {appData.company}&lt;/footer&gt;;
+}</div>
+                            <p><strong>Tree Structure:</strong></p>
+                            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+App
+├── Header
+│   ├── Logo (receives: company)
+│   └── Navigation (receives: theme)
+├── MainContent
+│   └── Article (receives: company)
+└── Footer (receives: appData)</pre>
+                            <p><strong>Data Flow:</strong> App holds data → passes to Header, MainContent, Footer → they pass specific props to their children. Data flows DOWN only, never UP.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Design a blog post component system with filtering. Demonstrate proper use of keys, conditional rendering, and component reusability.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function BlogPost({ post }) {
+  return (
+    &lt;article className="blog-post"&gt;
+      &lt;h2&gt;{post.title}&lt;/h2&gt;
+      &lt;p className="meta"&gt;
+        By {post.author} | {post.date}
+      &lt;/p&gt;
+      &lt;p&gt;{post.excerpt}&lt;/p&gt;
+      &lt;button&gt;Read More&lt;/button&gt;
+    &lt;/article&gt;
+  );
+}
+
+function BlogList({ posts, selectedCategory }) {
+  // Filter posts by category
+  const filteredPosts = selectedCategory === "All"
+    ? posts
+    : posts.filter(post =&gt; post.category === selectedCategory);
+  
+  return (
+    &lt;section className="blog-list"&gt;
+      &lt;h2&gt;{selectedCategory} Posts&lt;/h2&gt;
+      
+      {filteredPosts.length &gt; 0 ? (
+        &lt;div className="posts-container"&gt;
+          {filteredPosts.map(post =&gt; (
+            // IMPORTANT: Use unique ID as key, not index
+            &lt;BlogPost key={post.id} post={post} /&gt;
+          ))}
+        &lt;/div&gt;
+      ) : (
+        &lt;p className="no-posts"&gt;No posts in this category&lt;/p&gt;
+      )}
+    &lt;/section&gt;
+  );
+}
+
+function BlogApp() {
+  const [selectedCategory, setSelectedCategory] = React.useState("All");
+  
+  const posts = [
+    {
+      id: 1,
+      title: "React Basics",
+      author: "Alice",
+      date: "2024-01-15",
+      category: "React",
+      excerpt: "Learn React fundamentals..."
+    },
+    {
+      id: 2,
+      title: "JavaScript Tips",
+      author: "Bob",
+      date: "2024-01-10",
+      category: "JavaScript",
+      excerpt: "Useful JS tricks..."
+    },
+    {
+      id: 3,
+      title: "Advanced React",
+      author: "Alice",
+      date: "2024-01-05",
+      category: "React",
+      excerpt: "Deep dive into React..."
+    }
+  ];
+  
+  const categories = ["All", "React", "JavaScript", "CSS"];
+  
+  return (
+    &lt;div className="blog-app"&gt;
+      &lt;h1&gt;Tech Blog&lt;/h1&gt;
+      
+      {/* Category Filter */}
+      &lt;div className="filters"&gt;
+        {categories.map(cat =&gt; (
+          &lt;button
+            key={cat}
+            onClick={() =&gt; setSelectedCategory(cat)}
+            className={selectedCategory === cat ? "active" : ""}
+          &gt;
+            {cat}
+          &lt;/button&gt;
+        ))}
+      &lt;/div&gt;
+      
+      &lt;BlogList posts={posts} selectedCategory={selectedCategory} /&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                            <p><strong>Key Concepts:</strong></p>
+                            <ul>
+                                <li><strong>Component Reusability:</strong> BlogPost component used for all posts</li>
+                                <li><strong>Key Usage:</strong> post.id used as key (unique identifier)</li>
+                                <li><strong>Conditional Rendering:</strong> Shows posts or "no posts" message</li>
+                                <li><strong>Filtering Logic:</strong> Filters posts by selected category</li>
+                                <li><strong>Event Handling:</strong> Category buttons update selected state</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UNIT 2 -->
+        <div id="unit-2" class="unit-content">
+            <div class="card">
+                <h2>📗 Unit 2: Events & State Management (7 Hours)</h2>
+                <p>Master event handling, React hooks for state management, and advanced state techniques.</p>
+                
+                <h3>Key Topics Covered:</h3>
+                <ul>
+                    <li><strong>Event Handlers:</strong> onClick, onChange, onSubmit</li>
+                    <li><strong>useState Hook:</strong> State management in functional components</li>
+                    <li><strong>useEffect Hook:</strong> Side effects and lifecycle</li>
+                    <li><strong>State Updates:</strong> Objects and arrays immutably</li>
+                    <li><strong>useReducer Hook:</strong> Complex state logic</li>
+                    <li><strong>Context API:</strong> Global state management</li>
+                </ul>
+
+                <div class="key-points">
+                    <h4>⭐ Key Takeaways</h4>
+                    <ul>
+                        <li>Never modify state directly</li>
+                        <li>State updates are asynchronous</li>
+                        <li>Use functional setState for dependent updates</li>
+                        <li>useEffect dependencies matter for performance</li>
+                        <li>Lift state up for shared data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Unit 2 Question Paper -->
+            <div class="question-paper">
+                <div class="paper-header">
+                    <h2>Sample Question Paper - Unit 2</h2>
+                    <p>Events & State Management | Time: 1 Hour</p>
+                </div>
+
+                <div class="paper-meta">
+                    <div class="meta-box">
+                        <span class="meta-label">Total Marks</span>
+                        <span class="meta-value">100</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">1 Mark Questions</span>
+                        <span class="meta-value">12</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">2 Mark Questions</span>
+                        <span class="meta-value">4</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">4 Mark Questions</span>
+                        <span class="meta-value">4</span>
+                    </div>
+                    <div class="meta-box">
+                        <span class="meta-label">6 Mark Questions</span>
+                        <span class="meta-value">4</span>
+                    </div>
+                </div>
+
+                <div class="section-title">📍 Section A: 1 Mark Questions (Compulsory)</div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">What is the difference between handling events in HTML and React?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>HTML:</strong> Event handlers as strings: onclick="handleClick()"</p>
+                            <p><strong>React:</strong> Event handlers as functions: onClick={handleClick}. Uses camelCase, passes event object, supports event delegation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Explain the purpose of the useState Hook in React.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>useState adds state to functional components. Returns an array with current state value and function to update it. Triggers re-render when state changes. Syntax: const [state, setState] = useState(initialValue)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">What are dependencies in the useEffect Hook and why are they important?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Dependencies array tells useEffect when to run. Empty array [] = run once on mount. No array = run every render. [variable] = run when variable changes. Prevents unnecessary effects and controls re-renders.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">What is event propagation in React? How can you stop it?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Event propagation is when events bubble up from child to parent elements. Stop it using e.stopPropagation() in event handler. Prevent default behavior with e.preventDefault().</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">5</span>
+                        <span class="question-text">What is the difference between controlled and uncontrolled components?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Controlled:</strong> Component value controlled by React state. <strong>Uncontrolled:</strong> Component manages its own state via DOM. Controlled components are preferred for React.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">6</span>
+                        <span class="question-text">Explain the concept of lifting state up in React.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>When multiple components need same state, move state to their common parent. Parent manages state and passes to children via props. Children communicate via callbacks to update parent state.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">7</span>
+                        <span class="question-text">What are side effects in React? Give examples.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Side effects are operations that interact with world outside components: fetching data, updating DOM, subscriptions, timers. useEffect Hook handles side effects. Examples: API calls, document.title changes, event listeners.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">8</span>
+                        <span class="question-text">What is the useReducer Hook and when should it be used instead of useState?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>useReducer manages complex state with reducer function. Use when state logic is complex, multiple related state values, or next state depends on previous. Better than multiple useState for interconnected state.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">9</span>
+                        <span class="question-text">Explain immutability in state management. Why is it important?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Immutability means not modifying original state directly. Create new objects/arrays with changes. Important for React to detect changes, prevent bugs, enable undo/redo, optimize re-renders with shallow comparison.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">10</span>
+                        <span class="question-text">What is state batching and how does it improve performance?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>State batching groups multiple state updates together in one re-render instead of separate re-renders. React 18+ auto-batches updates. Improves performance by reducing unnecessary DOM updates and re-renders.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">11</span>
+                        <span class="question-text">What is the Context API and how does it solve prop drilling?</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p>Context API allows passing data through component tree without passing props manually. Create context with createContext(), use Provider to supply value, consume with useContext() Hook. Solves prop drilling for deeply nested components.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">12</span>
+                        <span class="question-text">Explain the render and commit phases in React's update cycle.</span>
+                        <span class="marks">1 Mark</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <p><strong>Render Phase:</strong> React calls component and calculates what to display. <strong>Commit Phase:</strong> React applies changes to DOM. useEffect runs after commit phase. Understanding this improves performance optimization.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">📍 Section B: 2 Mark Questions</div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Write a controlled input component that updates state as user types and displays the value.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function ControlledInput() {
+  const [name, setName] = React.useState("");
+  
+  return (
+    &lt;div&gt;
+      &lt;input
+        type="text"
+        value={name}
+        onChange={(e) =&gt; setName(e.target.value)}
+        placeholder="Enter your name"
+      /&gt;
+      &lt;p&gt;You typed: {name}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Demonstrate the useEffect Hook by fetching data from an API when component mounts.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function UserProfile({ userId }) {
+  const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  
+  React.useEffect(() =&gt; {
+    const fetchUser = async () =&gt; {
+      try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        setUser(data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchUser();
+  }, [userId]); // Re-fetch when userId changes
+  
+  if (loading) return &lt;div&gt;Loading...&lt;/div&gt;;
+  return &lt;div&gt;&lt;h1&gt;{user.name}&lt;/h1&gt;&lt;/div&gt;;
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Show how to update an object in state immutably with an example.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function UserForm() {
+  const [user, setUser] = React.useState({
+    name: "Alice",
+    email: "alice@example.com"
+  });
+  
+  // Wrong: Direct mutation
+  // user.name = "Bob";
+  
+  // Correct: Create new object
+  const handleUpdateName = (newName) =&gt; {
+    setUser({
+      ...user,
+      name: newName
+    });
+  };
+  
+  const handleUpdateEmail = (newEmail) =&gt; {
+    setUser(prevUser =&gt; ({
+      ...prevUser,
+      email: newEmail
+    }));
+  };
+  
+  return (
+    &lt;div&gt;
+      &lt;input value={user.name} 
+        onChange={(e) =&gt; handleUpdateName(e.target.value)} /&gt;
+      &lt;p&gt;Name: {user.name}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Create a simple counter component showing how to update array state immutably.</span>
+                        <span class="marks">2 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function TodoList() {
+  const [todos, setTodos] = React.useState([
+    { id: 1, text: "Learn React", done: false }
+  ]);
+  
+  // Add todo
+  const handleAddTodo = (text) =&gt; {
+    setTodos([...todos, { id: Date.now(), text, done: false }]);
+  };
+  
+  // Remove todo
+  const handleRemoveTodo = (id) =&gt; {
+    setTodos(todos.filter(todo =&gt; todo.id !== id));
+  };
+  
+  // Update todo
+  const handleToggleTodo = (id) =&gt; {
+    setTodos(todos.map(todo =&gt;
+      todo.id === id ? { ...todo, done: !todo.done } : todo
+    ));
+  };
+  
+  return (
+    &lt;ul&gt;
+      {todos.map(todo =&gt; (
+        &lt;li key={todo.id} 
+          onClick={() =&gt; handleToggleTodo(todo.id)}&gt;
+          {todo.text}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">📍 Section C: 4 Mark Questions</div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Explain event handling in React with different scenarios: click events, form submission, and onChange events.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function EventHandlingDemo() {
+  const [count, setCount] = React.useState(0);
+  const [name, setName] = React.useState("");
+  
+  // 1. Click Event
+  const handleClick = () =&gt; {
+    setCount(count + 1);
+  };
+  
+  // 2. Change Event
+  const handleChange = (e) =&gt; {
+    setName(e.target.value);
+  };
+  
+  // 3. Form Submission
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    alert(`Submitted: ${name}`);
+    setName("");
+  };
+  
+  return (
+    &lt;div&gt;
+      {/* Click Event */}
+      &lt;button onClick={handleClick}&gt;
+        Clicked {count} times
+      &lt;/button&gt;
+      
+      {/* Change Event */}
+      &lt;input
+        value={name}
+        onChange={handleChange}
+        placeholder="Enter name"
+      /&gt;
+      &lt;p&gt;Entered: {name}&lt;/p&gt;
+      
+      {/* Form Submission */}
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input type="submit" value="Submit" /&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Create a form component with multiple input fields. Show proper state management and validation.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function RegistrationForm() {
+  const [formData, setFormData] = React.useState({
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+  
+  const [errors, setErrors] = React.useState({});
+  
+  const handleChange = (e) =&gt; {
+    const { name, value } = e.target;
+    setFormData(prev =&gt; ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const validate = () =&gt; {
+    const newErrors = {};
+    if (!formData.email.includes("@")) {
+      newErrors.email = "Invalid email";
+    }
+    if (formData.password.length &lt; 6) {
+      newErrors.password = "Min 6 characters";
+    }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirm = "Passwords don't match";
+    }
+    return newErrors;
+  };
+  
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form valid:", formData);
+    } else {
+      setErrors(newErrors);
+    }
+  };
+  
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Email"
+      /&gt;
+      {errors.email && &lt;p style={{color: "red"}}&gt;{errors.email}&lt;/p&gt;}
+      
+      &lt;input
+        name="password"
+        type="password"
+        value={formData.password}
+        onChange={handleChange}
+      /&gt;
+      {errors.password && &lt;p style={{color: "red"}}&gt;{errors.password}&lt;/p&gt;}
+      
+      &lt;button type="submit"&gt;Register&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Demonstrate lifting state up by creating parent and child components that share state.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">// Parent Component (manages state)
+function Temperature() {
+  const [celsius, setCelsius] = React.useState(0);
+  
+  const fahrenheit = (celsius * 9/5) + 32;
+  
+  return (
+    &lt;div&gt;
+      &lt;Input
+        value={celsius}
+        onChange={(e) =&gt; setCelsius(Number(e.target.value))}
+        label="Celsius:"
+      /&gt;
+      &lt;Display temp={celsius} unit="°C" /&gt;
+      &lt;Display temp={fahrenheit} unit="°F" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Child Component 1 (controlled input)
+function Input({ value, onChange, label }) {
+  return (
+    &lt;label&gt;
+      {label}
+      &lt;input value={value} onChange={onChange} /&gt;
+    &lt;/label&gt;
+  );
+}
+
+// Child Component 2 (display only)
+function Display({ temp, unit }) {
+  return &lt;p&gt;Temperature: {temp}{unit}&lt;/p&gt;;
+}</div>
+                            <p><strong>Key Points:</strong> Parent manages state, passes value and handler to Input, both Display and Input use parent's state, changes in one reflect in both.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Write a component that uses useReducer Hook to manage a todo application state.</span>
+                        <span class="marks">4 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function todoReducer(state, action) {
+  switch(action.type) {
+    case 'ADD_TODO':
+      return [...state, {
+        id: Date.now(),
+        text: action.payload,
+        done: false
+      }];
+    case 'REMOVE_TODO':
+      return state.filter(todo =&gt; todo.id !== action.payload);
+    case 'TOGGLE_TODO':
+      return state.map(todo =&gt;
+        todo.id === action.payload
+          ? { ...todo, done: !todo.done }
+          : todo
+      );
+    default:
+      return state;
+  }
+}
+
+function TodoApp() {
+  const [todos, dispatch] = React.useReducer(todoReducer, []);
+  const [input, setInput] = React.useState("");
+  
+  const handleAdd = () =&gt; {
+    if (input.trim()) {
+      dispatch({ type: 'ADD_TODO', payload: input });
+      setInput("");
+    }
+  };
+  
+  return (
+    &lt;div&gt;
+      &lt;input
+        value={input}
+        onChange={(e) =&gt; setInput(e.target.value)}
+      /&gt;
+      &lt;button onClick={handleAdd}&gt;Add&lt;/button&gt;
+      
+      &lt;ul&gt;
+        {todos.map(todo =&gt; (
+          &lt;li key={todo.id}&gt;
+            &lt;input
+              type="checkbox"
+              checked={todo.done}
+              onChange={() =&gt;
+                dispatch({ type: 'TOGGLE_TODO', payload: todo.id })
+              }
+            /&gt;
+            {todo.text}
+            &lt;button onClick={() =&gt;
+              dispatch({ type: 'REMOVE_TODO', payload: todo.id })
+            }&gt;
+              Delete
+            &lt;/button&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">📍 Section D: 6 Mark Questions</div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">1</span>
+                        <span class="question-text">Create a shopping cart component that manages complex state with multiple operations (add, remove, update quantity). Use hooks effectively.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function ShoppingCart() {
+  const [cart, setCart] = React.useState([
+    { id: 1, name: "Laptop", price: 1000, qty: 1 },
+    { id: 2, name: "Mouse", price: 25, qty: 2 }
+  ]);
+  
+  // Add item
+  const addItem = (item) =&gt; {
+    const exists = cart.find(c =&gt; c.id === item.id);
+    if (exists) {
+      updateQuantity(item.id, exists.qty + 1);
+    } else {
+      setCart([...cart, { ...item, qty: 1 }]);
+    }
+  };
+  
+  // Remove item
+  const removeItem = (id) =&gt; {
+    setCart(cart.filter(item =&gt; item.id !== id));
+  };
+  
+  // Update quantity
+  const updateQuantity = (id, newQty) =&gt; {
+    if (newQty &lt;= 0) {
+      removeItem(id);
+    } else {
+      setCart(cart.map(item =&gt;
+        item.id === id ? { ...item, qty: newQty } : item
+      ));
+    }
+  };
+  
+  // Calculate total
+  const total = cart.reduce((sum, item) =&gt;
+    sum + (item.price * item.qty), 0
+  );
+  
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Shopping Cart&lt;/h2&gt;
+      {cart.length === 0 ? (
+        &lt;p&gt;Cart is empty&lt;/p&gt;
+      ) : (
+        &lt;&gt;
+          &lt;ul&gt;
+            {cart.map(item =&gt; (
+              &lt;li key={item.id}&gt;
+                {item.name} - ${item.price}
+                &lt;input
+                  type="number"
+                  value={item.qty}
+                  onChange={(e) =&gt;
+                    updateQuantity(item.id, Number(e.target.value))
+                  }
+                  min="1"
+                /&gt;
+                &lt;button onClick={() =&gt; removeItem(item.id)}&gt;
+                  Remove
+                &lt;/button&gt;
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+          &lt;h3&gt;Total: ${total.toFixed(2)}&lt;/h3&gt;
+        &lt;/&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">2</span>
+                        <span class="question-text">Write a comprehensive example showing useEffect Hook with cleanup function, multiple dependencies, and API calls.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function UserDashboard({ userId }) {
+  const [user, setUser] = React.useState(null);
+  const [posts, setPosts] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  
+  // Effect 1: Fetch user data when userId changes
+  React.useEffect(() =&gt; {
+    let isMounted = true; // Prevent memory leak
+    
+    const fetchUser = async () =&gt; {
+      try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        if (isMounted) setUser(data);
+      } catch (err) {
+        if (isMounted) setError(err.message);
+      }
+    };
+    
+    fetchUser();
+    
+    // Cleanup function
+    return () =&gt; {
+      isMounted = false;
+    };
+  }, [userId]); // Dependency: userId
+  
+  // Effect 2: Fetch posts when user data available
+  React.useEffect(() =&gt; {
+    if (!user) return;
+    
+    const fetchPosts = async () =&gt; {
+      try {
+        const response = await fetch(`/api/posts/${user.id}`);
+        const data = await response.json();
+        setPosts(data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPosts();
+  }, [user]); // Dependency: user object
+  
+  // Effect 3: Set document title
+  React.useEffect(() =&gt; {
+    if (user) {
+      document.title = `${user.name}'s Profile`;
+    }
+    
+    return () =&gt; {
+      document.title = "Default Title";
+    };
+  }, [user]); // Dependency: user
+  
+  if (loading) return &lt;div&gt;Loading...&lt;/div&gt;;
+  if (error) return &lt;div&gt;Error: {error}&lt;/div&gt;;
+  if (!user) return &lt;div&gt;No user found&lt;/div&gt;;
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{user.name}&lt;/h1&gt;
+      &lt;h2&gt;Posts:&lt;/h2&gt;
+      &lt;ul&gt;
+        {posts.map(post =&gt; (
+          &lt;li key={post.id}&gt;{post.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</div>
+                            <p><strong>Key Concepts:</strong> Cleanup function prevents memory leaks, multiple effects for different concerns, dependency arrays control when effects run.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">3</span>
+                        <span class="question-text">Design a complex form component with validation, error handling, and useReducer for state management.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">const formReducer = (state, action) =&gt; {
+  switch(action.type) {
+    case 'FIELD_CHANGE':
+      return {
+        ...state,
+        values: { ...state.values, [action.field]: action.value },
+        touched: { ...state.touched, [action.field]: true }
+      };
+    case 'SUBMIT':
+      return { ...state, submitted: true };
+    case 'RESET':
+      return {
+        values: { email: '', password: '', name: '' },
+        touched: {},
+        submitted: false,
+        errors: {}
+      };
+    default:
+      return state;
+  }
+};
+
+function ComplexForm() {
+  const [state, dispatch] = React.useReducer(formReducer, {
+    values: { email: '', password: '', name: '' },
+    touched: {},
+    submitted: false,
+    errors: {}
+  });
+  
+  const validateForm = () =&gt; {
+    const errors = {};
+    if (!state.values.email.includes('@')) {
+      errors.email = 'Invalid email';
+    }
+    if (state.values.password.length &lt; 6) {
+      errors.password = 'Min 6 characters';
+    }
+    if (state.values.name.trim() === '') {
+      errors.name = 'Name required';
+    }
+    return errors;
+  };
+  
+  const handleChange = (e) =&gt; {
+    const { name, value } = e.target;
+    dispatch({
+      type: 'FIELD_CHANGE',
+      field: name,
+      value
+    });
+  };
+  
+  const handleSubmit = (e) =&gt; {
+    e.preventDefault();
+    const errors = validateForm();
+    
+    if (Object.keys(errors).length === 0) {
+      alert('Form submitted successfully');
+      dispatch({ type: 'RESET' });
+    } else {
+      // Show errors
+      console.log('Errors:', errors);
+    }
+  };
+  
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;Name:&lt;/label&gt;
+        &lt;input
+          name="name"
+          value={state.values.name}
+          onChange={handleChange}
+          onBlur={handleChange}
+        /&gt;
+      &lt;/div&gt;
+      
+      &lt;div&gt;
+        &lt;label&gt;Email:&lt;/label&gt;
+        &lt;input
+          name="email"
+          value={state.values.email}
+          onChange={handleChange}
+        /&gt;
+      &lt;/div&gt;
+      
+      &lt;div&gt;
+        &lt;label&gt;Password:&lt;/label&gt;
+        &lt;input
+          name="password"
+          type="password"
+          value={state.values.password}
+          onChange={handleChange}
+        /&gt;
+      &lt;/div&gt;
+      
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+      &lt;button 
+        type="button"
+        onClick={() =&gt; dispatch({ type: 'RESET' })}
+      &gt;
+        Reset
+      &lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div>
+                        <span class="question-num">4</span>
+                        <span class="question-text">Create a real-time search and filter component using useState and useEffect Hooks. Include debouncing for performance.</span>
+                        <span class="marks">6 Marks</span>
+                    </div>
+                    <div class="answer-container">
+                        <button class="answer-toggle" onclick="toggleAnswer(this)">👁️ Show Answer</button>
+                        <div class="answer-content">
+                            <h4>Answer:</h4>
+                            <div class="code-block">function SearchableUserList() {
+  const [query, setQuery] = React.useState('');
+  const [results, setResults] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  
+  // Debounce search
+  React.useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; {
+      if (query.trim()) {
+        setLoading(true);
+        // Simulate API call
+        fetch(`/api/users?search=${query}`)
+          .then(res =&gt; res.json())
+          .then(data =&gt; {
+            setResults(data);
+            setLoading(false);
+          });
+      } else {
+        setResults([]);
+      }
+    }, 300); // 300ms debounce
+    
+    return () =&gt; clearTimeout(timer); // Cleanup
+  }, [query]);
+  
+  return (
+    &lt;div&gt;
+      &lt;input
+        type="text"
+        value={query}
+        onChange={(e) =&gt; setQuery(e.target.value)}
+        placeholder="Search users..."
+      /&gt;
+      
+      {loading && &lt;p&gt;Searching...&lt;/p&gt;}
+      
+      &lt;ul&gt;
+        {results.map(user =&gt; (
+          &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      
+      {!loading && results.length === 0 && query && (
+        &lt;p&gt;No results found&lt;/p&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</div>
+                            <p><strong>Performance Optimization:</strong> Debouncing prevents API calls on every keystroke, cleanup prevents memory leaks, useEffect manages side effect lifecycle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Units 3 & 4 (Summary) -->
+        <div id="unit-3" class="unit-content">
+            <div class="card">
+                <h2>📙 Unit 3: React Router (7 Hours)</h2>
+                <p style="color: #666; font-style: italic;">Note: Complete detailed question papers for Unit 3 and Unit 4 follow the same pattern as Unit 1 and Unit 2.</p>
+                <h3>Quick Topics:</h3>
+                <ul>
+                    <li>BrowserRouter & Routes setup</li>
+                    <li>useParams, useNavigate, useSearchParams</li>
+                    <li>Link & NavLink components</li>
+                    <li>Nested routes with Outlet</li>
+                    <li>Form handling with routing</li>
+                    <li>Error boundaries</li>
+                </ul>
+                <div class="key-points" style="margin-top: 2rem;">
+                    <h4>⚡ Quick Setup</h4>
+                    <div class="code-block" style="background: #f5f5f5; color: #333;">npm install react-router-dom
+
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+        &lt;Route path="/users/:id" element={&lt;UserDetail /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="unit-4" class="unit-content">
+            <div class="card">
+                <h2>📕 Unit 4: Redux State Management (7 Hours)</h2>
+                <p style="color: #666; font-style: italic;">Note: Complete detailed question papers for Unit 3 and Unit 4 follow the same pattern as Unit 1 and Unit 2.</p>
+                <h3>Quick Topics:</h3>
+                <ul>
+                    <li>Redux concepts (Store, Actions, Reducers)</li>
+                    <li>Redux Toolkit setup</li>
+                    <li>createSlice for state slices</li>
+                    <li>useSelector & useDispatch Hooks</li>
+                    <li>Selectors for state queries</li>
+                    <li>Async thunks for API calls</li>
+                </ul>
+                <div class="key-points" style="margin-top: 2rem;">
+                    <h4>⚡ Quick Setup</h4>
+                    <div class="code-block" style="background: #f5f5f5; color: #333;">npm install @reduxjs/toolkit react-redux
+
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import counterSlice from './slices/counterSlice';
+
+export const store = configureStore({
+  reducer: {
+    counter: counterSlice
+  }
+});
+
+// App
+import { Provider } from 'react-redux';
+import { store } from './store';
+
+&lt;Provider store={store}&gt;
+  &lt;App /&gt;
+&lt;/Provider&gt;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 BCSE-721: ReactJS Framework Study Portal</p>
+        <p>M.M. Deemed to be University, Mullana (Ambala) | Batch 2022-2026</p>
+        <p>Complete study material with sample papers and solutions</p>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function showUnit(unitNum) {
+            // Hide all units
+            document.querySelectorAll('.unit-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected unit
+            document.getElementById(`unit-${unitNum}`).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Toggle answer visibility
+        function toggleAnswer(button) {
+            const answerContent = button.nextElementSibling;
+            button.classList.toggle('active');
+            answerContent.classList.toggle('show');
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set first tab as active
+            document.querySelector('.tab-btn').classList.add('active');
+            document.getElementById('unit-1').classList.add('active');
+        });
+    </script>
+</body>
+</html>
