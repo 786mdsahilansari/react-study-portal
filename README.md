@@ -1,4 +1,4 @@
-# React Study Portal 📚
+# React Study Notes Portal 📚
 
 Live Demo: https://786mdsahilansari.github.io/react-study-portal/
 
